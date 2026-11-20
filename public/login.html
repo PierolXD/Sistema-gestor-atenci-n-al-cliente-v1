@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIS SEAL — Acceso de Operadores | Atención y suministros</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#09090b',
+            surface: '#0c0c0f',
+            'surface-container-low': '#0f0f12',
+            'surface-container': '#121215',
+            'surface-container-high': '#18181b',
+            'outline-variant': '#27272a',
+            primary: '#a78bfa',
+            'primary-container': '#7c3aed',
+            tertiary: '#34d399',
+            error: '#ef4444',
+            secondary: '#71717a',
+            'on-surface': '#fafafa',
+            'on-surface-variant': '#a1a1aa'
+          },
+          fontFamily: {
+            sans: ['Geist', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/css/obsidian.css" />
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col selection:bg-primary/30">
+  <!-- Top Bar -->
+  <header class="w-full border-b border-outline-variant bg-surface/80 backdrop-blur px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-[20px]">bolt</span>
+        </div>
+        <div>
+          <div class="text-xs font-bold tracking-wider uppercase text-on-surface">SIS SEAL</div>
+          <div class="text-[11px] text-on-surface-variant">Atención y suministros</div>
+        </div>
+      </div>
+      <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant text-[11px] text-on-surface-variant">
+        <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+        Servicios Operativos
+      </span>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 bg-surface-container border border-outline-variant rounded-lg px-3 py-1.5 text-xs">
+        <span class="material-symbols-outlined text-[16px] text-on-surface-variant">corporate_fare</span>
+        <span class="text-on-surface-variant hidden md:inline">Sucursal Operativa:</span>
+        <select id="sucursal-select" class="bg-transparent text-on-surface font-medium focus:outline-none cursor-pointer">
+          <option value="1" class="bg-surface-container">Sede Lambramani</option>
+        </select>
+      </div>
+      <button id="btn-help" type="button" class="flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-on-surface transition-colors">
+        <span class="material-symbols-outlined text-[16px]">help_center</span>
+        <span class="hidden sm:inline">Mesa de Ayuda</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Center Login Card -->
+  <main class="flex-1 flex items-center justify-center p-6 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none opacity-30" style="background: radial-gradient(circle at 50% 35%, rgba(124, 58, 237, 0.16), transparent 55%);"></div>
+
+    <div class="w-full max-w-[420px] relative z-10 obsidian-card p-8 shadow-2xl">
+      <div class="flex flex-col items-center text-center mb-7">
+        <div class="w-12 h-12 rounded-xl bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary mb-4">
+          <span class="material-symbols-outlined text-[24px]">bolt</span>
+        </div>
+        <h1 class="text-xl font-bold tracking-tight text-on-surface">Sistema de Atención</h1>
+        <p class="text-xs text-on-surface-variant mt-1">Acceso de Operadores · SIS SEAL</p>
+      </div>
+
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label for="emp-code" class="block text-xs font-medium text-on-surface mb-1.5">
+            Código o Usuario de Empleado
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined text-[18px] text-secondary absolute left-3 top-1/2 -translate-y-1/2">badge</span>
+            <input
+              id="emp-code"
+              type="text"
+              autocomplete="username"
+              required
+              placeholder="Ej: ADMIN o OP-90412"
+              value="ADMIN"
+              class="w-full obsidian-input pl-10 pr-4 py-2.5 text-xs font-mono tracking-wide"
+            />
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="emp-pass" class="text-xs font-medium text-on-surface">Contraseña</label>
+            <button id="btn-forgot" type="button" class="text-[11px] text-primary hover:underline">
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
+          <div class="relative">
+            <span class="material-symbols-outlined text-[18px] text-secondary absolute left-3 top-1/2 -translate-y-1/2">lock</span>
+            <input
+              id="emp-pass"
+              type="password"
+              autocomplete="current-password"
+              required
+              placeholder="••••••••••••••••"
+              value="ADMIN"
+              class="w-full obsidian-input pl-10 pr-10 py-2.5 text-xs tracking-wider"
+            />
+            <button
+              id="toggle-pass"
+              type="button"
+              aria-label="Mostrar contraseña"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-secondary hover:text-on-surface"
+            >
+              <span id="toggle-pass-icon" class="material-symbols-outlined text-[18px]">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="login-error" class="hidden rounded-lg bg-error/10 border border-error/40 text-red-300 px-3 py-2 text-xs"></div>
+
+        <button
+          id="btn-submit"
+          type="submit"
+          class="w-full btn-primary py-2.5 px-4 text-xs flex items-center justify-center gap-2 mt-2 shadow-lg shadow-primary/15 cursor-pointer"
+        >
+          <span>Iniciar Sesión</span>
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    const existingToken = localStorage.getItem('sacs_token');
+    if (existingToken) {
+      fetch('/api/auth/me', { headers: { Authorization: `Bearer ${existingToken}` } })
+        .then((r) => {
+          if (r.ok) {
+            window.location.href = '/index.html';
+          } else {
+            localStorage.removeItem('sacs_token');
+            localStorage.removeItem('sacs_user');
+            localStorage.removeItem('sacs_sucursal');
+            localStorage.removeItem('sacs_ventanilla');
+          }
+        })
+        .catch(() => {});
+    }
+
+    const sucursalSelect = document.getElementById('sucursal-select');
+    const empCode = document.getElementById('emp-code');
+    const empPass = document.getElementById('emp-pass');
+    const loginError = document.getElementById('login-error');
+    const loginForm = document.getElementById('login-form');
+    const btnSubmit = document.getElementById('btn-submit');
+
+    fetch('/api/usuarios/sucursales')
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.ok && Array.isArray(res.data) && res.data.length > 0) {
+          sucursalSelect.innerHTML = res.data
+            .map((s) => `<option value="${s.id}" class="bg-surface-container">${s.nombre}</option>`)
+            .join('');
+        }
+      })
+      .catch(() => {});
+
+    document.getElementById('toggle-pass').addEventListener('click', () => {
+      const isPwd = empPass.type === 'password';
+      empPass.type = isPwd ? 'text' : 'password';
+      document.getElementById('toggle-pass-icon').textContent = isPwd ? 'visibility_off' : 'visibility';
+    });
+
+    document.getElementById('btn-help').addEventListener('click', () => {
+      alert('Mesa de Ayuda TI SEAL: Ext. 4040.\nCredenciales activas: ADMIN / ADMIN, OP-90412 / TerminalAccess2025!, SUP-10001 / Supervisor2025!');
+    });
+
+    document.getElementById('btn-forgot').addEventListener('click', () => {
+      alert('Para restablecer credenciales contacte al Administrador (ADMIN) o Mesa de Ayuda Ext. 4040.');
+    });
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      loginError.classList.add('hidden');
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = '<span>Verificando credenciales...</span>';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            codigo_empleado: empCode.value.trim(),
+            password: empPass.value,
+            sucursal_id: Number(sucursalSelect.value) || 1
+          })
+        });
+        const body = await res.json();
+        if (!res.ok || !body.ok) {
+          throw new Error(body.error || 'Error al iniciar sesión.');
+        }
+
+        localStorage.setItem('sacs_token', body.data.token);
+        localStorage.setItem('sacs_user', JSON.stringify(body.data.usuario));
+        localStorage.setItem('sacs_sucursal', JSON.stringify(body.data.sucursal));
+        localStorage.setItem('sacs_ventanilla', JSON.stringify(body.data.ventanilla));
+        window.location.href = '/index.html';
+      } catch (err) {
+        loginError.textContent = err.message;
+        loginError.classList.remove('hidden');
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<span>Iniciar Sesión</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span>';
+      }
+    });
+  </script>
+</body>
+</html>
